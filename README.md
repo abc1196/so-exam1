@@ -41,12 +41,21 @@ El primer parcial del curso sistemas operativos trata sobre el manejo de los com
 **1. sum_all_numbers**
 Para el primer reto se creó un script para ejecutar la tarea. El script inicia declarando la variable suma igual a cero. Luego, un loop (while) se encarga de leer cada línea del archivo. Este valor es agregado a la variable suma, que es mostrada, al final del bucle, mediante el comando echo.
 
+    #!/bin/bash
+    suma=0;
+    while read number;
+    do ((suma+=number));
+    done  sum-me.txt
+    echo $suma;
+
 | CMD | CentOs7 |
 | --- | --- |
 | ![][1] | ![][2] |
 
 **2. replace_spaces_in_filenames**
 Para el primer reto se creó un script para ejecutar la tarea. El script inicia declarando la variable suma igual a cero. Luego, un loop (while) se encarga de leer cada línea del archivo. Este valor es agregado a la variable suma, que es mostrada, al final del bucle, mediante el comando echo.
+
+    ls | sed 's/ /\./g'
 
 | CMD | CentOs7 |
 | --- | --- |
@@ -55,6 +64,8 @@ Para el primer reto se creó un script para ejecutar la tarea. El script inicia 
 **3. reverse_readme**
 El tercer reto no tuvo mayor dificultad. El comando cat, utilizado para ver el contenido de los archivos, tiene su inverso: tac, que permite mostrar el contenido de un archivo en sentido contrario, es decir, la primera línea se imprime de última y la última línea de primera.
 
+    tac README
+
 | CMD | CentOs7 |
 | --- | --- |
 | ![][7] | ![][8] ![][9] |
@@ -62,12 +73,16 @@ El tercer reto no tuvo mayor dificultad. El comando cat, utilizado para ver el c
 **4. remove_duplicated_lines**
 En el cuarto reto se buscó e implementó el comando awk. El parámetro ‘!duplicate[$0]++’ le indica al comando que líneas imprimir. $0 contiene toda la línea. Si el contenido del índice del arreglo, en este caso duplicate, no ha sido establecido, entonces el índice duplicate se incremente y la línea se imprime.
 
+    awk '!duplicate[$0]++' faces.txt
+
 | CMD | CentOs7 |
 | --- | --- |
 | ![][10] ![][11] | ![][12] |
 
-**4. disp_table**
+**5. disp_table**
 En el quinto reto se implementó uno de los comandos vistos en clase de nuevo: sed. En este caso, se muestra el contenido del archivo table.csv. Posteriormente, se utilizó el comando sed reemplazar las comas (“\,”) con espacios (“/ /”). Por último, el comando column permite ordenar la información del archivo en formato de columnas. El parámetro -t tabula simple a cada una.
+
+    cat table.csv | sed 's/\,/ /g' | column -t
 
 | CMD | CentOs7 |
 | --- | --- |
