@@ -3,9 +3,9 @@
 **Curso:** Sistemas Operativos  
 **Docente:** Daniel Barragán C.  
 **Tema:** Comandos de Linux, Virtualización  
-**Correo:** daniel.barragan at correo.icesi.edu.co
-**Nombre:** Alejandro Bueno Cardona
-**Código:** A00335472
+**Correo:** daniel.barragan at correo.icesi.edu.co  
+**Nombre:** Alejandro Bueno Cardona  
+**Código:** A00335472  
 
 ### Objetivos
 * Conocer y emplear comandos de Linux para la realización de tareas administrativas
