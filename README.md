@@ -55,7 +55,7 @@ Para el primer reto se creó un script para ejecutar la tarea. El script inicia 
 | ![][1] | ![][2] |
 
 **2. replace_spaces_in_filenames**
-Para el primer reto se creó un script para ejecutar la tarea. El script inicia declarando la variable suma igual a cero. Luego, un loop (while) se encarga de leer cada línea del archivo. Este valor es agregado a la variable suma, que es mostrada, al final del bucle, mediante el comando echo.
+En el segundo reto se implementó uno de los comandos vistos en clase: sed. En este caso, se tomaron los archivos del directorio actual con ls. Posteriormente, se utilizó el comando sed reemplazar los espacios (“/ /”) con puntos (“\.”).
 
     ls | sed 's/ /\./g'
 
@@ -92,7 +92,7 @@ En el quinto reto se implementó uno de los comandos vistos en clase de nuevo: s
 
 #### Script Gutenberg-Crontab
 
-En el momento que se realizó el parcial, Gutenberg contaba con 66588 libros en su página. Cada uno se obtiene mediante el enlace  https://www,gutenberg.org/files/numID/numID.txt. Sin embargo, a partir del numID=40, los libros presentan variaciones en su identificador. Por esto, el script presenta, de manera aleatoria, los primeros 40 libros, es decir, el conjunto de libros con numID entre 1 y 40. El script que realiza la descarga del libro en el directorio /home/Gutenberg/mybooks es el siguiente:
+En el momento que se realizó el parcial, Gutenberg contaba con 66588 libros en su página. Cada uno se obtiene mediante el enlace  https://www,gutenberg.org/files/numID/numID.txt. Sin embargo, a partir del numID=40, los libros presentan variaciones en su identificador. Por esto, el script presenta, de manera aleatoria, los primeros 39 libros, es decir, el conjunto de libros con numID entre 1 y 40. El script que realiza la descarga del libro en el directorio /home/Gutenberg/mybooks es el siguiente:
 
 ![][15]
 
@@ -125,8 +125,40 @@ Para terminar, se comprobó la existencia del archivo en el usuario y directorio
 
 ![][21]
 
+#### Rickroll.c  
 
+En términos generales, el código fuente rickroll.c carga un módulo del kernel, que cambia la ejecución de los archivos en formato .mp3. Cuando el usuario lo abre, se reproduce, en cambio, la canción “Never Gonna Give You Up” de Rick Astley. A continuación, se explica, de manera general, el código correspondiente.
+Primero, se incluyen las librerías referentes a Linux: module, kernel, init, syscalls y string. Además, se establece la Licencia Pública General (GPL) y su autor.
 
+pic
+
+Segundo, se establece la ruta de la canción con rickroll_filename. Luego, se establece el parámetro del módulo para la ruta del archivo. En tiempo de ejecución, insmod enviara las variables al módulo del kernel. Los argumentos son: el nombre de la variable, el tipo de dato y los permisos correspondiente para el archivo en sysfs, que permite configurar parámetros al kernel. 
+
+pic
+
+Tercero, se crean dos constantes para deshabilitar y habilitar el área de memoria, que incluye la system call table. Porque modificar esta área puede ocasionar errores de protección. Después, se crean las funciones encargadas de encontrar la system call table, abrir la nueva canción y ejecutar el archivo original. Las tres tienen la particularidad de ser declaradas como asmlinkage. Esta etiqueta le indica al compilador, que busque en la pila de la CPU los parámetros de las funciones, en vez de hacerlo en los registros. Estas funciones, tipo system calls, guardan sus parámetros en la pila, por lo que es necesario informarle al compilador al respecto con asmlinkage.
+
+pic
+
+Cuarto, carga el módulo al sistema con module_init, cuyo parámetro es la función rickroll_init, que primero valida la existencia de la canción y la system call table. La tabla es cargada llamando la función find_sys_call_table, que, de manera general, busca en el espacio de memoria del kernel, su dirección. Seguido, la función reemplaza la entrada para ser abierto con la función rickroll_open. La ubicación de la llamada al sistema original se guarda, para ser restablecida después. 
+
+pic 
+
+pic 
+
+pic
+
+La función rickroll_open primero valida que el archivo sea tipo .mp3. En caso contrario, retorna la llamada al sistema original. Si es válido, entonces la función procede a ejecutar el archivo rickroll, de manera específica, en la siguiente línea:
+              
+              fd = (*original_sys_open)(rickroll_filename, flags, mode);
+              
+pic
+
+Por último, se cierra el módulo con module_exit, que tiene de parámetro la función rickroll_cleanup, que reestablece la llamada al sistema original en la system call table. 
+
+pic
+
+pic
 
 ### Referencias
 * https://cmdchallenge.com  
@@ -134,6 +166,11 @@ Para terminar, se comprobó la existencia del archivo en el usuario y directorio
 * https://github.com/jvns/kernel-module-fun/blob/master/rickroll.c
 * https://www.youtube.com/watch?v=efEZZZf_nTc
 * http://www.desarrollolibre.net/blog/tema/106/linux/ejecutar-script-automaticamente-con-cron-en-linux#.WdhTJ2jWxEY
+*	https://www.quora.com/Linux-Kernel-What-does-asmlinkage-mean-in-the-definition-of-system-calls
+*	https://github.com/ICESI/so-commands/tree/master/centos7
+*	https://lists.debian.org/debian-user-spanish/2011/08/msg00272.html
+*	https://www.tutorialspoint.com/unix_commands/awk.htm
+
 
 [1]: images/reto1CMD.png
 [2]: images/reto1CO.png
