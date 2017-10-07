@@ -130,35 +130,35 @@ Para terminar, se comprobó la existencia del archivo en el usuario y directorio
 En términos generales, el código fuente rickroll.c carga un módulo del kernel, que cambia la ejecución de los archivos en formato .mp3. Cuando el usuario lo abre, se reproduce, en cambio, la canción “Never Gonna Give You Up” de Rick Astley. A continuación, se explica, de manera general, el código correspondiente.
 Primero, se incluyen las librerías referentes a Linux: module, kernel, init, syscalls y string. Además, se establece la Licencia Pública General (GPL) y su autor.
 
-pic
+![][22]
 
 Segundo, se establece la ruta de la canción con rickroll_filename. Luego, se establece el parámetro del módulo para la ruta del archivo. En tiempo de ejecución, insmod enviara las variables al módulo del kernel. Los argumentos son: el nombre de la variable, el tipo de dato y los permisos correspondiente para el archivo en sysfs, que permite configurar parámetros al kernel. 
 
-pic
+![][23]
 
 Tercero, se crean dos constantes para deshabilitar y habilitar el área de memoria, que incluye la system call table. Porque modificar esta área puede ocasionar errores de protección. Después, se crean las funciones encargadas de encontrar la system call table, abrir la nueva canción y ejecutar el archivo original. Las tres tienen la particularidad de ser declaradas como asmlinkage. Esta etiqueta le indica al compilador, que busque en la pila de la CPU los parámetros de las funciones, en vez de hacerlo en los registros. Estas funciones, tipo system calls, guardan sus parámetros en la pila, por lo que es necesario informarle al compilador al respecto con asmlinkage.
 
-pic
+![][24]
 
 Cuarto, carga el módulo al sistema con module_init, cuyo parámetro es la función rickroll_init, que primero valida la existencia de la canción y la system call table. La tabla es cargada llamando la función find_sys_call_table, que, de manera general, busca en el espacio de memoria del kernel, su dirección. Seguido, la función reemplaza la entrada para ser abierto con la función rickroll_open. La ubicación de la llamada al sistema original se guarda, para ser restablecida después. 
 
-pic 
+![][26] 
 
-pic 
+![][28] 
 
-pic
+![][25]
 
 La función rickroll_open primero valida que el archivo sea tipo .mp3. En caso contrario, retorna la llamada al sistema original. Si es válido, entonces la función procede a ejecutar el archivo rickroll, de manera específica, en la siguiente línea:
               
               fd = (*original_sys_open)(rickroll_filename, flags, mode);
               
-pic
+![][27]
 
 Por último, se cierra el módulo con module_exit, que tiene de parámetro la función rickroll_cleanup, que reestablece la llamada al sistema original en la system call table. 
 
-pic
+![][29]
 
-pic
+![][30]
 
 ### Referencias
 * https://cmdchallenge.com  
@@ -193,4 +193,13 @@ pic
 [19]: images/sgc5.png
 [20]: images/sgc6.png
 [21]: images/sgc7.png
+[22]: images/rickroll1.PNG
+[23]: images/rickroll2PNG.PNG
+[24]: images/rickroll3.PNG
+[25]: images/rickroll4.PNG
+[26]: images/rickroll5.PNG
+[27]: images/rickroll6.PNG
+[28]: images/rickroll7.PNG
+[29]: images/rickroll8.PNG
+[30]: images/rickroll10.PNG
 
