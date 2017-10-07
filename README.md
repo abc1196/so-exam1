@@ -101,7 +101,7 @@ El script asigna dos variables: numID, con el identificador aleatorio mencionado
 Por otro lado, para ejecutar el script cada 5 minutos, se utilizó crontab, que es un archivo de texto, donde se guarda una lista de comandos para ser ejecutados. A continuación, se puede ver el formato para los comandos de crontab:
 
 ![][16]
-*Tomada de http://www.desarrollolibre.net/blog/tema/106/linux/ejecutar-script-automaticamente-con-cron-en-linux#.WdhTJ2jWxEY
+* Tomada de http://www.desarrollolibre.net/blog/tema/106/linux/ejecutar-script-automaticamente-con-cron-en-linux#.WdhTJ2jWxEY
 
 Cambiando el primero parámetro de minutos a */5 y dejando en * los demás, crontab procede a ejecutar el script cada 5 minutos.
 
