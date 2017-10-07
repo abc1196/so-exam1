@@ -5,7 +5,8 @@
 **Tema:** Comandos de Linux, Virtualización  
 **Correo:** daniel.barragan at correo.icesi.edu.co  
 **Nombre:** Alejandro Bueno Cardona  
-**Código:** A00335472  
+**Código:** A00335472 
+**URL:** https://github.com/abc1196/so-exam1  
 
 ### Objetivos
 * Conocer y emplear comandos de Linux para la realización de tareas administrativas
